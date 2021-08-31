@@ -66,9 +66,6 @@
         </el-table>
       </el-tab-pane>
     </el-tabs>
-    <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
-
-
   </div>
 </template>
 
@@ -185,10 +182,7 @@ export default {
       }).catch((err) => {
         console.log(err)
       })
-
-
     }
-
   }
 }
 </script>
