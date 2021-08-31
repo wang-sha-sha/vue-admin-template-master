@@ -36,10 +36,10 @@
       </el-date-picker>
     </div>
     <el-tabs v-model="activeName" @tab-click="handleClick" class="clearfix">
-      <el-tab-pane label="图展示" name="first">
+      <el-tab-pane label="图形展示" name="first">
         <div id="myChart" style="height: 530px"></div>
       </el-tab-pane>
-      <el-tab-pane label="表展示" name="second">
+      <el-tab-pane label="表格展示" name="second">
         <el-table
           border
           height="500"
@@ -140,7 +140,6 @@ export default {
       });
     },
     changeData(dataType) {
-      console.log('data type')
       this.dateList = []
       this.vipPurchaseCountList = []
       this.visitorPurchaseCountList = []
