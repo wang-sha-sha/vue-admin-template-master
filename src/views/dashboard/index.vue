@@ -5,7 +5,6 @@
         <div class="grid-content bg-purple" @click="changeData('brandCountList')">品牌数量：
           <count-to :start-val="0" :end-val="summary.brandCount" :duration="1200" class="card-panel-num"/>
         </div>
-
       </el-col>
       <el-col :span="6">
         <div class="grid-content bg-purple" @click="changeData('shopCountList')">购物数量：
@@ -101,19 +100,18 @@ export default {
     }
   },
   mounted() {
-    this.init()//创建echart实例
+    this.initChart()//创建echart实例
     this.drawLine()//调接口获取数据
   },
   watch: {
     tableData: {
-      // deep:true,
       handler(newVal, oldVal) {
         this.setOption()
       }
     }
   },
   methods: {
-    init() {
+    initChart() {
       // 基于准备好的dom，初始化echarts实例
       this.chart = this.$echarts.init(document.getElementById('myChart'))
       this.setOption()
@@ -176,7 +174,6 @@ export default {
             this.visitorPurchaseCountList.push(item.visitorPurchaseCount);
           })
         } else {
-
           console.log('非200', res.status, res.data.data.retCode)
         }
       }).catch((err) => {

@@ -129,10 +129,6 @@ export default {
         url: [
           {required: true, message: '请输入url地址', trigger: 'blur'},
         ],
-        // desc: [
-        //   {required: true, message: '请输入品牌描述', trigger: 'blur'},
-        //   {min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur'}
-        // ]
         desc: [
           {validator: descText, trigger: 'blur'}
         ]
