@@ -160,7 +160,7 @@ export default {
       axios.get('http://www.yefengyu.top/shop/summary-data/get-summary', {
         params: {
           startDate: this.date[0],
-          endDate: this.date1[1]
+          endDate: this.date[1]
         }
       }).then((res) => {
         console.log('成功', res)

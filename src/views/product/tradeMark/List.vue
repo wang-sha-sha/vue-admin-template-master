@@ -18,9 +18,9 @@
       <el-table-column
         label="序号"
         width="80"
-        :index="indexMethod"
         type="index"
         align="center"
+        prop="index"
       />
       <el-table-column
         label="品牌名称"
@@ -171,16 +171,16 @@ export default {
       this.getBrandList()
     },
     getBrandList() {
-
+      const brands = []
       this.loading = true
-      if (this.brandList.length === 1) {
-        this.queryParam.pageNum--
-      }
       axios.get('http://www.yefengyu.top/shop/brand/get-brand-list', {
         params: this.queryParam
       }).then((res) => {
-        // console.log(res)
-        this.brandList = res.data.data.list
+        res.data.data.list.forEach((item, index) => {
+          item.index = index + 1 + this.queryParam.pageNum
+          brands.push(item)
+        })
+        this.brandList = brands
         this.total = res.data.data.total
         this.loading = false
       }).catch((err) => {
