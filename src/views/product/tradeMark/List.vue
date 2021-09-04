@@ -177,7 +177,7 @@ export default {
         params: this.queryParam
       }).then((res) => {
         res.data.data.list.forEach((item, index) => {
-          item.index = index + 1 + this.queryParam.pageNum
+          item.index = index + 1 + (this.queryParam.pageNum - 1) * this.queryParam.pageSize
           brands.push(item)
         })
         this.brandList = brands
