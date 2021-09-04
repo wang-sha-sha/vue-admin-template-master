@@ -18,7 +18,6 @@
       <el-table-column
         label="序号"
         width="80"
-        type="index"
         align="center"
         prop="index"
       />
@@ -176,8 +175,10 @@ export default {
       axios.get('http://www.yefengyu.top/shop/brand/get-brand-list', {
         params: this.queryParam
       }).then((res) => {
+        debugger
+        const page = (this.queryParam.pageNum - 1) * this.queryParam.pageSize
         res.data.data.list.forEach((item, index) => {
-          item.index = index + 1 + (this.queryParam.pageNum - 1) * this.queryParam.pageSize
+          item.index = index + 1 + page
           brands.push(item)
         })
         this.brandList = brands
