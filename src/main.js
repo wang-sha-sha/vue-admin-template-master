@@ -61,6 +61,11 @@ Vue.prototype.$API = API
 Vue.prototype.$echarts = echarts
 Vue.prototype.$moment = moment;//赋值使用
 
+// 身份证部分隐藏过滤器
+Vue.filter('hideId', function (id) {
+  if (!id) return
+  return id.replace(/^(.{6})(?:\w+)(.{4})$/ , '$1********$2')
+})
 
 
 // Vue.filter('dateFormat', function (dateStr, pattern = 'YYYY-MM-DD') {

@@ -28,9 +28,14 @@
       />
       <el-table-column
         label="描述"
-        width="width"
-        prop="desc"
-      />
+        width="200px">
+        <template slot-scope="scope">
+          <span v-if="!scope.row.isShow">{{ scope.row.desc|hideId }}</span>
+          <span v-if="scope.row.isShow">{{ scope.row.desc}}</span>
+          <span class="el-icon-open"  style="float: right;font-size:20px" @mousedown="disPlayDown(scope.$index)"
+                @mouseleave="disPlayUp(scope.$index)" @mouseup="disPlayUp(scope.$index)"></span>
+        </template>
+      </el-table-column>
       <el-table-column
         label="操作"
         width="300px">
@@ -149,7 +154,14 @@ export default {
       this.$refs.tmform.resetFields()
 
     },
-
+    disPlayDown(index){
+      this.$set(this.brandList[index],'isShow', true)
+      this.$forceUpdate()
+    },
+    disPlayUp(index){
+      this.$set(this.brandList[index],'isShow', false)
+      this.$forceUpdate()
+    },
     // 重置
     reset() {
       this.queryParam.brandName = ''
@@ -170,12 +182,11 @@ export default {
       this.getBrandList()
     },
     getBrandList() {
-      const brands = []
       this.loading = true
       axios.get('http://www.yefengyu.top/shop/brand/get-brand-list', {
         params: this.queryParam
       }).then((res) => {
-        debugger
+        const brands = []
         const page = (this.queryParam.pageNum - 1) * this.queryParam.pageSize
         res.data.data.list.forEach((item, index) => {
           item.index = index + 1 + page
