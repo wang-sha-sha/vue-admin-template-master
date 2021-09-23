@@ -3,15 +3,10 @@
     <el-tree :data="data" :props="defaultProps" @node-click="nodeClick" ref="tree">
     <span slot-scope="{node, data}">
       <span>
-<!--        <i class="el-icon-success" v-if="node.level==1"></i>-->
-        <!--        <i class="el-icon-info" v-else-if="node.level==2"></i>-->
-        <!--        <i class="el-icon-view" v-else></i>-->
         {{ data.label }}
-        <!--        <i :class="node.icon"></i>{{node.icon}}-->
       </span>
     </span>
     </el-tree>
-<!--    <button @click="forTest">测试</button>-->
   </div>
 
 </template>
@@ -65,7 +60,6 @@ export default {
     nodeClick(data, node) {
       // console.log('data', data)
       console.log('node', node)
-      // debugger
       // 将数据传给父组件
       this.$emit('test', data, node)
       // console.log('父节点', node.parent.data.label)

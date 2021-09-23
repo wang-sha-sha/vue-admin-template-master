@@ -3,13 +3,11 @@
     <zia @test="getData(arguments)"></zia>
     <zib :bText="bText"></zib>
   </div>
-
 </template>
 
 <script>
 import zia from './ziA'
 import zib from './ziB'
-
 export default {
   components: {
     zia,

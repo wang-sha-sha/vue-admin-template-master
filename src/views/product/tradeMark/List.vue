@@ -4,6 +4,30 @@
     <el-input placeholder="请输入查询条件" style="width: 15%; margin: 0 20px" v-model="queryParam.brandName"></el-input>
     <el-button type="primary" @click="getBrandList">查询</el-button>
     <el-button type="primary" @click="reset">重置</el-button>
+<!--    本地搜索：filterable支持搜索-->
+<!--    <el-select v-model='listTest' filterable multiple>-->
+<!--      <el-option-->
+<!--        v-for="item in brandList"-->
+<!--        :key="item.id"-->
+<!--        :label="item.brandName"-->
+<!--        :value="item.id">-->
+<!--      </el-option>-->
+<!--    </el-select>-->
+        <el-select
+          v-model='listTest'
+          filterable
+          multiple
+          remote
+          :remote-method="remoteMethod">
+          <el-option
+            v-for="item in newBrandList"
+            :key="item.id"
+            :label="item.brandName"
+            :value="item.id">
+          </el-option>
+        </el-select>
+
+
     <el-table
       v-loading="loading"
       border
@@ -108,6 +132,8 @@ export default {
       }
     };
     return {
+      newBrandList: [],
+      listTest: '', // 存储选中的表格项的品牌名称
       dialogFormVisible: false, // 控制对话框的显示和隐藏
       formLabelWidth: '100px', // label的宽度
       tmform: {
@@ -146,6 +172,27 @@ export default {
     this.getBrandList()
   },
   methods: {
+    remoteMethod(query){
+      console.log(query,"listTest")
+      if(query!==''){
+        this.queryParam.brandName = query
+        axios.get('http://www.yefengyu.top/shop/brand/get-brand-list', {
+          params: this.queryParam
+        }).then(({data})=>{
+          console.log(data,'successqqq')
+          this.newBrandList = data.data.list
+          this.queryParam.brandName = ''
+        }).catch(()=>{
+          console.log('error')
+        })
+      }
+
+    },
+    // handleChange(row, column, event){
+    //   console.log(row, '111')
+    //   this.list.push(row.brandName)
+    //   console.log(this.list, 'this.list111')
+    // },
     handleSelectionChange(val) {
       this.multipleSelection = val;
     },
