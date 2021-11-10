@@ -4,28 +4,28 @@
     <el-input placeholder="请输入查询条件" style="width: 15%; margin: 0 20px" v-model="queryParam.brandName"></el-input>
     <el-button type="primary" @click="getBrandList">查询</el-button>
     <el-button type="primary" @click="reset">重置</el-button>
-<!--    本地搜索：filterable支持搜索-->
-<!--    <el-select v-model='listTest' filterable multiple>-->
-<!--      <el-option-->
-<!--        v-for="item in brandList"-->
-<!--        :key="item.id"-->
-<!--        :label="item.brandName"-->
-<!--        :value="item.id">-->
-<!--      </el-option>-->
-<!--    </el-select>-->
-        <el-select
-          v-model='listTest'
-          filterable
-          multiple
-          remote
-          :remote-method="remoteMethod">
-          <el-option
-            v-for="item in newBrandList"
-            :key="item.id"
-            :label="item.brandName"
-            :value="item.id">
-          </el-option>
-        </el-select>
+    <!--    本地搜索：filterable支持搜索-->
+    <!--    <el-select v-model='listTest' filterable multiple>-->
+    <!--      <el-option-->
+    <!--        v-for="item in brandList"-->
+    <!--        :key="item.id"-->
+    <!--        :label="item.brandName"-->
+    <!--        :value="item.id">-->
+    <!--      </el-option>-->
+    <!--    </el-select>-->
+    <el-select
+      v-model='listTest'
+      filterable
+      multiple
+      remote
+      :remote-method="remoteMethod">
+      <el-option
+        v-for="item in newBrandList"
+        :key="item.id"
+        :label="item.brandName"
+        :value="item.id">
+      </el-option>
+    </el-select>
 
 
     <el-table
@@ -55,8 +55,8 @@
         width="200px">
         <template slot-scope="scope">
           <span v-if="!scope.row.isShow">{{ scope.row.desc|hideId }}</span>
-          <span v-if="scope.row.isShow">{{ scope.row.desc}}</span>
-          <span class="el-icon-open"  style="float: right;font-size:20px" @mousedown="disPlayDown(scope.$index)"
+          <span v-if="scope.row.isShow">{{ scope.row.desc }}</span>
+          <span class="el-icon-open" style="float: right;font-size:20px" @mousedown="disPlayDown(scope.$index)"
                 @mouseleave="disPlayUp(scope.$index)" @mouseup="disPlayUp(scope.$index)"></span>
         </template>
       </el-table-column>
@@ -169,24 +169,24 @@ export default {
     //console.log(this)
     // 查询所有
     //debugger
-    this.getBrandList()
+    this.getBrandList();
+    this.autoScrollTable()
   },
   methods: {
-    remoteMethod(query){
-      console.log(query,"listTest")
-      if(query!==''){
+    remoteMethod(query) {
+      console.log(query, "listTest")
+      if (query !== '') {
         this.queryParam.brandName = query
         axios.get('http://www.yefengyu.top/shop/brand/get-brand-list', {
           params: this.queryParam
-        }).then(({data})=>{
-          console.log(data,'successqqq')
+        }).then(({data}) => {
+          console.log(data, 'successqqq')
           this.newBrandList = data.data.list
           this.queryParam.brandName = ''
-        }).catch(()=>{
+        }).catch(() => {
           console.log('error')
         })
       }
-
     },
     // handleChange(row, column, event){
     //   console.log(row, '111')
@@ -201,12 +201,12 @@ export default {
       this.$refs.tmform.resetFields()
 
     },
-    disPlayDown(index){
-      this.$set(this.brandList[index],'isShow', true)
+    disPlayDown(index) {
+      this.$set(this.brandList[index], 'isShow', true)
       this.$forceUpdate()
     },
-    disPlayUp(index){
-      this.$set(this.brandList[index],'isShow', false)
+    disPlayUp(index) {
+      this.$set(this.brandList[index], 'isShow', false)
       this.$forceUpdate()
     },
     // 重置
@@ -300,6 +300,29 @@ export default {
           return false;
         }
       })
+    },
+    autoScrollTable() {
+      var this_ = this
+      this.$nextTick(() => {
+        let div = document.getElementsByClassName("el-table__body-wrapper")[0];
+        div.style.height = "620px";
+        let t = document.getElementsByClassName("el-table__body")[0];
+        setInterval(() => {
+          if (true) {
+            var data = this_.brandList[0];
+            setTimeout(() => {
+              this_.brandList.push(data);
+              t.style.transition = "all .5s";
+              t.style.marginTop = "-53px";
+            }, 500);
+            setTimeout(() => {
+              this_.brandList.splice(0, 1);
+              t.style.transition = "all 0s ease 0s";
+              t.style.marginTop = "0";
+            }, 1000);
+          }
+        }, 2500);
+      });
     },
     // 修改
     showUpdateDia(row) {
